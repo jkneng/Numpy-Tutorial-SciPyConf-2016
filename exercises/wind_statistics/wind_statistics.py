@@ -71,5 +71,60 @@ These data were analyzed in detail in the following article:
 
 See :ref:`wind-statistics-solution`.
 """
-
+import numpy as np
 from numpy import loadtxt
+wind_data = loadtxt('wind.data', dtype=np.float)
+# 2.
+print '2:'
+data = wind_data[:, 3:]
+# print data
+print data.min(), data.max(), data.mean(), data.std()
+
+# 3.
+print '3:'
+# axis = 0: compute by column
+print data.min(axis=0)
+print data.max(axis=0)
+print data.mean(axis=0)
+print data.std(axis=0)
+
+# axis=(0, 1): compute by whole
+# print data.mean(axis=(0, 1))
+# 4
+print '4:'
+# axis = 1: compute by row
+print data.min(axis=1)
+print data.max(axis=1)
+print data.mean(axis=1)
+print data.std(axis=1)
+
+print '5:'
+print data.argmax(axis=1)
+
+print '6:'
+daily_max = data.argmax(axis=1)
+row_max = daily_max.argmax()
+print 'Day of max reading: %s-%s-%s' % (wind_data[row_max, 0], wind_data[row_max, 1], wind_data[row_max, 2])
+
+print '7:'
+jan_indices = wind_data[:, 1] == 1
+jan_data = data[jan_indices]
+print jan_data.mean(axis=0)
+
+print 'Bonus 1:'
+months = wind_data[:, 0] * 100 + wind_data[:, 1]
+month_values = set(months)
+month_means = np.zeros(len(month_values))
+
+for month in month_values:
+    daily_indices = months == month
+    month_means[month] =  data[daily_indices].mean()
+
+print 'Bonus 2: '
+weekly_data = data[: 52 * 7].reshape(-1, 12 * 7)
+print weekly_data.min(axis=1)
+print weekly_data.max(axis=1)
+print weekly_data.mean(axis=1)
+print weekly_data.std(axis=1)
+
+print 'Bonus Bonus: '
