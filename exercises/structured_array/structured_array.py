@@ -59,3 +59,24 @@ log_file = open('short_logs.crv')
 # The first line is a header that has all the log names.
 header = log_file.readline()
 log_names = header.split()
+log_formats = [float64] * len(log_names)
+
+logs = loadtxt('short_logs.crv', dtype={'names': tuple(log_names), 'formats': tuple(log_formats)}, skiprows=1)
+# print type(logs)
+# print logs['DEPTH']
+
+logs_2d = logs.view(float64).reshape(-1, len(log_names))
+# print logs_2d
+
+logs_2d[logs_2d == -999.25] = NaN
+# print logs_2d
+
+# print isfinite(logs_2d)
+data_mask = all(isfinite(logs_2d), axis=1)
+good_logs = logs[data_mask]
+# print good_logs
+
+plot(good_logs['VP'], good_logs['VS'])
+xlabel('VP')
+ylabel('VS')
+show()
