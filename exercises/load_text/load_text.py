@@ -58,3 +58,12 @@ See :ref:`load-text-solution`
 """
 
 from numpy import loadtxt
+
+data = loadtxt('float_data.txt')
+print data
+
+data1 = loadtxt('float_data_with_header.txt',skiprows=1)
+print data1
+
+data2 = loadtxt('complex_data_file.txt', comments='%', skiprows=1, dtype=int, delimiter=',', usecols=(0, 1, 2, 4))
+print data2
