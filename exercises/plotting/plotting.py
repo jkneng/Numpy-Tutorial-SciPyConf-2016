@@ -68,4 +68,26 @@ x = linspace(0, 2 * pi, 101)
 s = sin(x)
 c = cos(x)
 
+close('all')
+
+ax1 = subplot(2, 2, 1)
+plot(x, s, 'b-', x, c, 'r+')
+axis('tight')
+
+# subplot(2, 2, 2, sharex = ax1, sharey = ax1) # two subplot sharing same axes makes them acts at the same time
+subplot(2, 2, 2)
+plot(x, s)
+grid()
+xlabel('x from 0 ~ 2pi')
+ylabel('sinx')
+title('sin(x)')
+axis('tight')
+
 img = imread('dc_metro.JPG')
+subplot(2, 2, 3)
+imshow(img, extent=[-10, 10, -10, 10], cmap=cm.winter)
+tight_layout()
+
+show() # comment when savefig
+
+# savefig('test.png')
